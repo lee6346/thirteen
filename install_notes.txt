@@ -1,0 +1,26 @@
+INSTALL / CONFIGURE MYSQL for DJANGO (Windows OS)
+
+1) Download and install MySQL installer MSI for Windows: http://dev.mysql.com/downloads/mysql/
+2) Install mysql server via installer 
+3) in the settings.py file of the django project, configure the database to connect to mysql
+    (sample)
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.mysql',
+                'NAME': 'django_db',
+                'USER': 'root',
+                'PASSWORD': 'root',
+                'HOST': 'localhost',
+                'PORT': '3306',
+            }
+        }
+    (alternative)
+        create a mysql option file:  http://dev.mysql.com/doc/refman/5.7/en/option-files.html
+4) with the virtual environment activated, install the mysql-python connector via easy_install
+    (venv)$ easy_install mysql-python 
+5) test the connection by running the server 
+    (venv)$ python manage.py runserver
+    go to: http://127.0.0.1:8000/
+    
+
+    
