@@ -1,3 +1,6 @@
 *.pyc
 *.pyo
 **/*.pyc
+
+run_virtualenv.bat
+hidden/
