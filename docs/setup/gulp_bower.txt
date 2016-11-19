@@ -1,0 +1,33 @@
+1. Download Node.js: https://nodejs.org/en/download/
+    - windows installer (LTS) is good
+2. Install gulp through node:
+    - once node is installed, open a new CMD and run:
+        npm install --global gulp-cli
+3. Install bower through node:
+    - run command:
+        npm install -g bower
+
+Next step, install the dependencies
+4. from project root directory, in cmd run:
+    npm i
+    - this checks the packages/dependencies listed in the "package.json"
+      file and downloads them into the "node_modules" dir
+5. from project root directory, in cmd run:
+    bower i
+
+
+Gulp
+main site: http://gulpjs.com/
+github: https://github.com/gulpjs/gulp
+- a task runner. You create a script "gulpfile.js" which it runs,
+  and it runs whatever tasks you've created for it. Some of 
+  the most common uses are for front end build tasks such as:
+  - concatenating js files
+  - processing css superset formats
+
+bower
+main site: https://bower.io/
+- front end package manager.
+- manages front end stuff like javascreipt libraries, css libraries,
+ fonts, etc.
+- it's analagous to python's PIP package manager
