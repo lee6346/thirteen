@@ -4,6 +4,7 @@
 
 run_virtualenv.bat
 hidden/
+personal/
 
 node_modules/
 bower_components/

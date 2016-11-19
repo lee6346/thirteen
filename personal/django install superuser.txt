@@ -1,3 +1,0 @@
-django thirteen
-super user
-root / benjibenji
