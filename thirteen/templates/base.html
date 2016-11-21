@@ -1,0 +1,30 @@
+{% comment %}
+This is a base/master page. It's the template used for the main layout, and
+contains whatever is common to any pages. For example, the main navbar, footer, etc.
+{% endcomment %}
+
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thirteen</title>
+    {% comment %}below is an example of a django helper to reference static files{% endcomment %}
+    {% comment %}<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">{% endcomment %}
+</head>
+
+<body>
+
+    <h3>thirteen base layout</h3>
+    main navbar will go here later
+    <hr /> 
+    
+    {% block content %} 
+    {% endblock %}
+
+</body>
+
+</html>

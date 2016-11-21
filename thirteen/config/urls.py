@@ -16,8 +16,17 @@ Including another URLconf
 
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
+
 import views
+
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^admin/', admin.site.urls),
+
+    # by default, django.contrib.auth.views.login tries to render /registration/login.html,
+    # so we specify explicitly the template we'd like to use
+    url(r'^login/', auth_views.login, {'template_name':'login.html'}, name='login'),
+    url(r'^logout/', auth_views.logout, {'next_page': '/login'}, name='logout')
+
 ]
