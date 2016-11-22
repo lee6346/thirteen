@@ -5,7 +5,11 @@ from django.views import generic
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
+import logging
+log = logging.getLogger('thirteen')
+
 
 @login_required(login_url='login/')
 def index(request):
+    log.debug('user has logged in')
     return render(request, 'index.html')
