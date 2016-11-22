@@ -1,23 +1,20 @@
-from . import models
-from . import game_manager
-from . import utilities
+import models
+import game_manager
+import utilities
 
 class HandValidator(object):
     
     """
-    THINGS TO ADJUST
-    ?have suits only matter after a specific value? 
-    make sure all methods that need sort are sorted_hand
-    ?card.rank and card.suit may not be in the correct order
+    the card ranks in index 0, 1, ..., 11,  12 are 3, 4, ..., Ace, 2 respectively 
     """
-    def __init__(self, high_hand=None, high_class = 0):
+    def __init__(self, high_hand=None, high_class=0):
         self.high_hand = high_hand
         self.high_class = high_class
  
-    def isHighHand(self, hand, hand_manager):
+    def is_high_hand(self, hand, hand_manager):
     
-        classif = hand_manager.handClassification(hand)
-        standard = self.isStandardBeatable(hand, classif)
+        classif = hand_manager.hand_classification(hand)
+        standard = self.is_standard_beatable(hand, classif)
         
         switch = {
             "single" : standard or classif == "quad bomb",
@@ -32,11 +29,11 @@ class HandValidator(object):
             "quad bomb" : standard,
         }
         
-        if self.high_hand = None:
+        if self.high_hand == None:
             self.high_hand = hand
             self.high_class = classif
             return True
-        elif classif == "quad bomb" and hand[0].rank == 2:
+        elif classif == "quad bomb" and hand[0].rank == 12:
             self.high_hand = hand
             self.high_class = classif
             return True
@@ -47,129 +44,121 @@ class HandValidator(object):
         else:
             return False
         
-    def isStandardBeatable(self, hand, classif):
-        if self.isComparable(hand, classif) and self.isHighValue(hand):
-            return True
-        else:
-            return False
+    def is_standard_beatable(self, hand, classif):
+        return self.is_comparable(hand, classif) and self.is_high_value(hand)
         
-    def isComparable(self, hand, classif):
-        if self.isSameLength(hand) and self.high_class == classif:
-            return True
-        else:
-            return False
+    def is_comparable(self, hand, classif):
+        return self.is_same_length(hand) and self.high_class == classif
         
-    def isHighSuit(self, hand):
-        if hand[len(hand)-1].suit > self.high_hand[len(hand)-1].suit:
-            return True
-        else:
-            return False
+    def is_high_suit(self, hand):
+        return hand[len(hand)-1].suit > self.high_hand[len(hand)-1].suit
+        
+    def is_high_rank(self, hand):
+        return hand[len(hand)-1].rank > self.high_hand[len(hand)-1].rank
             
-    def isSameLength(self, hand):
-        if len(self.high_hand) == len(hand):
-            return True
-        else:
-            return False
+    def is_same_length(self, hand):
+        return len(self.high_hand) == len(hand)
             
-    def isHighValue(self, hand):
-        if hand[len(hand)-1].rank > self.high_hand[len(hand)-1].rank:
-            return True
-        elif hand[len(hand)-1].rank == self.high_hand[len(hand)-1].rank and self.isHighSuit(hand):
-            return True
-        else:
-            return False
+    def is_high_value(self, hand):
+        return self.is_high_rank(hand) or (hand[len(hand)-1].rank == self.high_hand[len(hand)-1].rank and self.is_high_suit(hand))
       
-    #determines if current hand is valid
-    def isPlayable(hand, hand_manager):
+    def is_playable(self, hand, hand_manager):
         switch = {
             1 : True,
-            2 : hand_manager.isRepeated(hand),
-            3 : hand_manager.isRepeated(hand) or hand_manager.isStraight(hand),
-            4 : hand_manager.isRepeated(hand) or hand_manager.isStraight(hand),
-            5 : hand_manager.isStraight(hand),
-            6 : hand_manager.isStraight(hand) or hand_manager.isConsecutivePairs(hand),
-            7 : hand_manager.isStraight(hand),
-            8 : hand_manager.isStraight(hand) or hand_manager.isConsecutivePairs(hand),
-            9 : hand_manager.isStraight(hand),
-            10 : hand_manager.isStraight(hand) or hand_manager.isConsecutivePairs(hand),
-            11 : hand_manager.isStraight(hand),
-            12 : hand_manager.isStraight(hand) or hand_manager.isConsecutivePairs(hand),
+            2 : hand_manager.is_repeated(hand),
+            3 : hand_manager.is_repeated(hand) or hand_manager.is_straight(hand),
+            4 : hand_manager.is_repeated(hand) or hand_manager.is_straight(hand),
+            5 : hand_manager.is_straight(hand),
+            6 : hand_manager.is_straight(hand) or hand_manager.is_consecutive_pairs(hand),
+            7 : hand_manager.is_straight(hand),
+            8 : hand_manager.is_straight(hand) or hand_manager.is_consecutive_pairs(hand),
+            9 : hand_manager.is_straight(hand),
+            10 : hand_manager.is_straight(hand) or hand_manager.is_consecutive_pairs(hand),
+            11 : hand_manager.is_straight(hand),
+            12 : hand_manager.is_straight(hand) or hand_manager.is_consecutive_pairs(hand),
         }
         return switch.get(len(hand), False)
       
 class HandManager(object):
 
     def __init__(self):
-        #self.hand = hand
+        pass
     
-    def sortCurrentHand(hand): #must use sort alg
-        sorted_hand = []
-        for each card in hand:
-            sorted_hand.append((hand.getRank(), hand.getSuit()))
-        sorted_hand.sort()
-        return sorted_hand
+    def sort_hand(self, hand):
+        def cmp_cards(card1, card2):
+            if card1.rank > card2.rank:
+                return 1
+            elif card1.rank == card2.rank and card1.suit > card2.suit:
+                return 1
+            else:
+                return 0
+            hand.sort(cmp_cards)
         
-    def isStraight(self, hand):
-        is_straight = True
-        sorted_hand = self.sortCurrentHand(hand)
-        for i in range(len(sorted_hand-1)):
-            if sorted_hand[i].rank - sorted_hand[i+1].rank != 1:
-                is_straight = False
+    def is_straight(self, hand):
+        straight = True
+        self.sort_hand(hand)
+        for i in range(len(hand)-1):
+            if hand[i].rank - hand[i+1].rank != -1:
+                straight = False
                 break
-            elif sorted_hand[i].rank == 2:
-                is_straight = False
+            elif hand[i].rank == 12:
+                straight = False
                 break
-        return is_straight
+        return straight
     
-    def isSuited(hand):
-        is_suited = True
+    def is_suited(self, hand):
+        suited = True
         for i in range(len(hand)-1):
             if hand[i].suit != hand[i+1].suit:
-                is_suited = False
+                suited = False
                 break
-        return is_suited
+        return suited
 
-    def isRepeated(hand):
-        is_repeated = True
+    def is_repeated(self, hand):
+        repeated = True
         for i in range(len(hand)-1):
             if hand[i].rank != hand[i+1].rank:
-                is_quad = False
+                repeated = False
                 break
-        return is_repeated
+        return repeated
         
-    def isConsecutivePairs(self, hand):
-        is_consec_pair = True
-        sorted_hand = self.sortCurrentHand(hand)
-        for i in range(len(hand)-2):
-            if sorted_hand[i*2] != sorted_hand[i*2 + 1]:
-                is_consec_pair = False
+    def is_consecutive_pairs(self, hand):
+        consec_pair = True
+        self.sort_hand(hand)
+        if len(hand) % 2 != 0:
+            return False
+        odd_hand = []
+        for i in range(len(hand)/2):
+            if hand[2*i] != hand[2*i + 1]:
+                consec_pair = False
                 break
-        if not self.isStraight(subset): # create subset 
-            is_consec_pair = False
-        return is_consec_pair
+            odd_hand.append(hand[i*2])
+        if not self.is_straight(odd_hand):
+            consec_pair = False
+        return consec_pair
                    
-    def handClassification(self, hand):
+    def hand_classification(self, hand):
         if len(hand) == 1:
-            if hand[0].rank == 2:
+            if hand[0].rank == 12:
                 return "single two"
             else:
                 return "single"
-        elif len(hand) == 2 and self.isRepeated(hand):
-            if hand[0].rank == 2:
+        elif len(hand) == 2 and self.is_repeated(hand):
+            if hand[0].rank == 12:
                 return "double two"
             else:
                 return "double"
         elif len(hand) >= 3:
-            if self.isRepeated(hand) and len(hand) == 3:
-                if hand[0].rank == 2:
+            if self.is_repeated(hand) and len(hand) == 3:
+                if hand[0].rank == 12:
                     return "triple two"
                 else:
                     return "triple"
-            elif self.isStraight(hand) and not self.isSuited(hand):
+            elif self.is_straight(hand) and not self.is_suited(hand):
                 return "straight"
-            elif self.isStraight(hand) and self.isSuited(hand):
+            elif self.is_straight(hand) and self.is_suited(hand):
                 return "suited straight"
-            elif len(hand) >= 6 and self.isConsecutivePairs(hand):
+            elif len(hand) >= 6 and self.is_consecutive_pairs(hand):
                 return "consecutive bomb"
             elif len(hand) == 4 and self.is_repeated(hand):
                 return "quad bomb"

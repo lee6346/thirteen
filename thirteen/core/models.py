@@ -1,4 +1,3 @@
-
 import random
 
 class Card(object):
@@ -15,7 +14,7 @@ class Deck(object):
     def reset(self):
         self.cards = []
         for suit in range(4):
-            for rank in range(0, 13):
+            for rank in range(13):
                 card = Card(suit, rank)
                 self.cards.append(card)
         
@@ -23,16 +22,16 @@ class Deck(object):
         random.shuffle(self.cards)
         
     def pop_card(self):
-        self.cards.pop(-1)
+        return self.cards.pop(-1)
     
-    def deal_cards(self, num_players, num_iterations, ):
+    def deal_cards(self, num_players, num_iterations):
         hands = []
-        for i in range(num_players)
+        for i in range(num_players):
             hands.append([])
-        reset(self)
-        shuffle(self)
+        self.reset()
+        self.shuffle()
         for i in range(13):
             for j in range(num_players):
-                hands[j].append(pop_card(self))
+                hands[j].append(self.pop_card())
         return hands
         
