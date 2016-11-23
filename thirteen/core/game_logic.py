@@ -14,30 +14,31 @@ class HandValidator(object):
     def is_high_hand(self, hand, hand_manager):
     
         classif = hand_manager.hand_classification(hand)
+        if self.high_hand == None:
+            self.high_hand = hand
+            self.high_class = classif
+            return True
+    
         standard = self.is_standard_beatable(hand, classif)
         
         switch = {
             "single" : standard or classif == "quad bomb",
-            "single two" : standard or (classif == "consecutive bomb" and len(card) >= 6) or classif == "quad bomb",
+            "single two" : standard or (classif == "consecutive bomb" and len(hand) >= 6) or classif == "quad bomb",
             "double" : standard or classif == "quad bomb",
-            "double two" : standard or (classif == "consecutive bomb" and len(card) >= 8) or classif == "quad bomb",
+            "double two" : standard or (classif == "consecutive bomb" and len(hand) >= 8) or classif == "quad bomb",
             "triple" : standard or classif == "quad bomb",
-            "triple two" : standard or (classif == "consecutive bomb" and len(card) >= 10) or classif == "quad bomb",
+            "triple two" : standard or (classif == "consecutive bomb" and len(hand) >= 10) or classif == "quad bomb",
             "straight" : standard or classif == "quad bomb",
             "suited straight" : standard or classif == "quad bomb",
             "consecutive bomb" : standard or classif == "quad bomb",
             "quad bomb" : standard,
         }
         
-        if self.high_hand == None:
+        if classif == "quad bomb" and hand[0].rank == 12:
             self.high_hand = hand
             self.high_class = classif
             return True
-        elif classif == "quad bomb" and hand[0].rank == 12:
-            self.high_hand = hand
-            self.high_class = classif
-            return True
-        elif switch.get(classif, False):
+        elif switch.get(self.high_class, False):
             self.high_hand = hand
             self.high_class = classif
             return True
@@ -97,11 +98,10 @@ class HandManager(object):
     def is_straight(self, hand):
         straight = True
         self.sort_hand(hand)
+        if hand[len(hand)-1].rank == 12:
+            straight = False
         for i in range(len(hand)-1):
             if hand[i].rank - hand[i+1].rank != -1:
-                straight = False
-                break
-            elif hand[i].rank == 12:
                 straight = False
                 break
         return straight
@@ -124,17 +124,16 @@ class HandManager(object):
         
     def is_consecutive_pairs(self, hand):
         consec_pair = True
+        odd_hand = []
         self.sort_hand(hand)
         if len(hand) % 2 != 0:
             return False
-        odd_hand = []
         for i in range(len(hand)/2):
-            if hand[2*i] != hand[2*i + 1]:
+            if not self.is_repeated([hand[i*2], hand[i*2+1]]):
                 consec_pair = False
                 break
             odd_hand.append(hand[i*2])
-        if not self.is_straight(odd_hand):
-            consec_pair = False
+        consec_pair = self.is_straight(odd_hand)
         return consec_pair
                    
     def hand_classification(self, hand):
@@ -162,6 +161,8 @@ class HandManager(object):
                 return "consecutive bomb"
             elif len(hand) == 4 and self.is_repeated(hand):
                 return "quad bomb"
+            else:
+                return 0
         else:
             return 0        
         
