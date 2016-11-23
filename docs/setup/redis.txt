@@ -1,0 +1,12 @@
+
+INSTALLATION/CONFIGURATION GUIDE OF DJANGO-REDIS CACHE FOR WINDOWS USERS 
+
+1. Download the latest stable release zip file from https://github.com/MSOpenTech/redis/releases
+    -Extract folder at preferred directory and run both redis-server.exe and redis-client.exe
+    -To test connection, on the command-line for redis-client, type 'ping' and the server should return 'PONG'
+    
+2. Download the Redis cache/session backend for django via pip with the following command: pip install django-redis [version-num]
+    -
+
+
+ 
