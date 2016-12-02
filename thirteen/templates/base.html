@@ -15,7 +15,8 @@ contains whatever is common to any pages. For example, the main navbar, footer, 
 
     <base href="/">
 
-    <link href="{% static 'styles/style.css' %}" rel="stylesheet">
+    <link href="{% static 'styles/libraries.css' %}" rel="stylesheet" />
+    <link href="{% static 'styles/style.css' %}" rel="stylesheet" />
 </head>
 
 <body>
@@ -27,6 +28,20 @@ contains whatever is common to any pages. For example, the main navbar, footer, 
     {% block content %} 
     {% endblock %}
 
+    <script src="{% static 'scripts/libraries/jquery.js' %}" type="text/javascript"></script>
+    <script src="{% static 'scripts/libraries/bootstrap.js' %}" type="text/javascript"></script>
+    <script src="{% static 'scripts/libraries/angular.js' %}" type="text/javascript"></script>
+    <script src="{% static 'scripts/libraries/angular-ui-router.js' %}" type="text/javascript"></script>
+    <script src="{% static 'scripts/libraries/ui-bootstrap-tpls.js' %}" type="text/javascript"></script>
+    
+    <script type="text/javascript">
+        // temporary, just a quick sample test
+        var testButton = window.document.getElementById('testButton');
+        testButton.addEventListener('click', function() {
+            var header = window.document.getElementsByTagName('h3')[0];
+            header.innerText = 'changed by clicking button!';
+        });
+    </script>
 </body>
 
 </html>
