@@ -9,8 +9,8 @@ angular.module('ttMainApp', [
 // optional configuration, in this case, routing
 angular.module('ttMainApp')
     .config([
-        '$stateProvider',
-        function ($stateProvider) {
+        '$stateProvider', '$urlRouterProvider',
+        function ($stateProvider, $urlRouterProvider) {
 
             // declare all the states (think URLs) we'll need here
             // with angular and ui router, each URL is associated to a 
@@ -32,4 +32,7 @@ angular.module('ttMainApp')
             states.forEach(function (state) {
                 $stateProvider.state(state);
             });
+
+            // redirects
+            $urlRouterProvider.when('', '/lobby');
         }]);
