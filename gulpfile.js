@@ -7,7 +7,7 @@ var gulp = require('gulp'),
     watch = require('gulp-watch');
 
 var root = './';
-var assetsRoot = './assets/'
+var assetsRoot = './thirteen/assets/'
 var staticRoot = './thirteen/static/';
 
 var npmDir = root + 'node_modules/';
@@ -17,7 +17,8 @@ var staticDirs = {
     images: staticRoot + 'images/',
     fonts: staticRoot + 'fonts/',
     scripts: {
-        libraries: staticRoot + 'scripts/libraries/'
+        libraries: staticRoot + 'scripts/libraries/',
+        custom: staticRoot + 'scripts/'
     }
 };
 
@@ -41,6 +42,19 @@ var npm = {
     ]
 };
 
+var getCustomScripts = function() {
+    var baseJsDir = assetsRoot + 'js/';
+
+    var moduleDirs = [
+        'main',
+        'lobby', 'table'
+    ];
+
+    return moduleDirs.map(function(dir) {
+        return baseJsDir + dir + '/*.js';
+    });
+};
+
 
 
 
@@ -50,13 +64,13 @@ gulp.task('default', ['copy', 'watch']);
 
 gulp.task('clean', ['clean-static']);
 
-gulp.task('clean-static', function () {
+gulp.task('clean-static', function() {
     return del(staticRoot + '**/*');
 });
 
 // removes everything from node_modules
-gulp.task('clean-dependencies', function () {
-    return del([npmDir].map(function (dir) {
+gulp.task('clean-dependencies', function() {
+    return del([npmDir].map(function(dir) {
         return dir + '**/*';
     }));
 });
@@ -64,11 +78,12 @@ gulp.task('clean-dependencies', function () {
 gulp.task('copy', [
     'copy-custom-sass',
     'copy-library-scripts',
+    'copy-custom-scripts',
     'copy-library-styles',
     'copy-fonts'
 ]);
 
-gulp.task('copy-custom-sass', function () {
+gulp.task('copy-custom-sass', function() {
     gulp.src(assetsRoot + 'style/**/*.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(concat('style.css'))
@@ -76,21 +91,27 @@ gulp.task('copy-custom-sass', function () {
         .pipe(gulp.dest(staticDirs.styles));
 });
 
-gulp.task('copy-library-scripts', function () {
+gulp.task('copy-library-scripts', function() {
     gulp.src(npm.scripts)
         //.pipe(concat('libraries.js'))
         .pipe(gulp.dest(staticDirs.scripts.libraries));
 });
 
-gulp.task('copy-library-styles', function () {
+gulp.task('copy-custom-scripts', function() {
+    gulp.src(getCustomScripts())
+        .pipe(concat('tt-main.js'))
+        .pipe(gulp.dest(staticDirs.scripts.custom));
+});
+
+gulp.task('copy-library-styles', function() {
     gulp.src(npm.styles)
         .pipe(concat('libraries.css'))
         .pipe(cssnano())
         .pipe(gulp.dest(staticDirs.styles));
 });
 
-gulp.task('copy-fonts', function () {
-    var fontDirExpressions = npm.fonts.map(function (fontDir) {
+gulp.task('copy-fonts', function() {
+    var fontDirExpressions = npm.fonts.map(function(fontDir) {
         return fontDir + '**/*';
     });
 
@@ -98,12 +119,12 @@ gulp.task('copy-fonts', function () {
         .pipe(gulp.dest(staticDirs.fonts));
 })
 
-gulp.task('watch', ['watch-sass']);
+gulp.task('watch', ['watch-sass', 'watch-custom-scripts']);
 
-gulp.task('watch-sass', function () {
+gulp.task('watch-sass', function() {
     gulp.watch(assetsRoot + 'style/**/*.scss', ['copy-custom-sass']);
 });
 
-gulp.task('watch-custom-scripts', function () {
-
+gulp.task('watch-custom-scripts', function() {
+    gulp.watch(assetsRoot + 'js/**/*.js', ['copy-custom-scripts']);
 });
