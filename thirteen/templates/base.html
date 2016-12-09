@@ -1,9 +1,5 @@
-{% comment %}
-This is a base/master page. It's the template used for the main layout, and
-contains whatever is common to any pages. For example, the main navbar, footer, etc.
-{% endcomment %}
-
-{% load staticfiles %}
+{% comment %} This is a base/master page. It's the template used for the main layout, and contains whatever is common to
+any pages. For example, the main navbar, footer, etc. {% endcomment %} {% load staticfiles %}
 
 <!DOCTYPE html>
 <html>
@@ -19,29 +15,27 @@ contains whatever is common to any pages. For example, the main navbar, footer, 
     <link href="{% static 'styles/style.css' %}" rel="stylesheet" />
 </head>
 
-<body>
-
+<body ng-app="ttMainApp">
     <h3>thirteen base layout</h3>
-    main navbar will go here later
-    <hr /> 
-    
-    {% block content %} 
-    {% endblock %}
+    <button class="btn btn-default" 
+            ui-sref="lobby">Lobby</button>
+    <button class="btn btn-default" 
+            ui-sref="table({id: '12345'})">Join a random table</button>
+    <hr />
 
+    <!--{% block content %}{% endblock %}-->
+
+    <ui-view></ui-view>
+
+    <!-- 3rd party library scripts -->
     <script src="{% static 'scripts/libraries/jquery.js' %}" type="text/javascript"></script>
     <script src="{% static 'scripts/libraries/bootstrap.js' %}" type="text/javascript"></script>
     <script src="{% static 'scripts/libraries/angular.js' %}" type="text/javascript"></script>
     <script src="{% static 'scripts/libraries/angular-ui-router.js' %}" type="text/javascript"></script>
     <script src="{% static 'scripts/libraries/ui-bootstrap-tpls.js' %}" type="text/javascript"></script>
-    
-    <script type="text/javascript">
-        // temporary, just a quick sample test
-        var testButton = window.document.getElementById('testButton');
-        testButton.addEventListener('click', function() {
-            var header = window.document.getElementsByTagName('h3')[0];
-            header.innerText = 'changed by clicking button!';
-        });
-    </script>
+
+    <!-- custom app scripts -->
+    <script src="{% static 'scripts/tt-main.js' %}" type="text/javascript"></script>
 </body>
 
 </html>
