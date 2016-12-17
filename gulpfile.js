@@ -47,7 +47,7 @@ var getCustomScripts = function() {
 
     var moduleDirs = [
         'main',
-        'lobby', 'table'
+           'lobby', 'table'
     ];
 
     return moduleDirs.map(function(dir) {

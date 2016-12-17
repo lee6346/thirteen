@@ -10,7 +10,7 @@
     "gulp-sass": "2.3.2",
     "gulp-watch": "4.3.11"
   },
-  "dependencies": {
+  "dependencies": { 
     "angular": "^1.5.9",
     "angular-ui-bootstrap": "^2.3.0",
     "angular-ui-router": "^0.3.2",
