@@ -27,5 +27,8 @@ urlpatterns = [
     # by default, django.contrib.auth.views.login tries to render /registration/login.html,
     # so we specify explicitly the template we'd like to use
     url(r'^login/', auth_views.login, {'template_name':'login.html'}, name='login'),
-    url(r'^logout/', auth_views.logout, {'next_page': '/login'}, name='logout')
+    url(r'^logout/', auth_views.logout, {'next_page': '/login'}, name='logout'),
+
+    # angular partial/template URLs
+    url(r'^partials/test/', views.test_template, name='test'),
 ]
