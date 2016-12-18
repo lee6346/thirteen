@@ -4,9 +4,13 @@
         This is the current hand container
         <div class="tt-green-table">
             This is the green
-            <div class="tt-card">A</div>
-            <div class="tt-card">K</div>
-            <div class="tt-card">J</div>
+            <div class="tt-card" 
+                 ng-repeat="card in cards"
+                 ng-style="{'background-position': card.x card.y}">
+                <div ng-bind="card.y"></div>
+                <div ng-bind="card.x"></div>
+
+            </div>
 
         </div>
 
