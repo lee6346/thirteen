@@ -14,14 +14,14 @@ angular.module('ttLobbyApp')
         $scope.availableTables = [];
 
         $scope.change = 'this is binded to an input';
-
+        //!!ajax call 
         $http({
             method: 'GET',
             url: '/gettable'
         })
             .then(function(data) {
                 console.log('data returned from call', data);
-                $scope.availableTables = data.data;
+                $scope.availableTables = data.data;  //!!referenced by  ng-repeat
 
 
             });

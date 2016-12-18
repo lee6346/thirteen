@@ -31,5 +31,10 @@ urlpatterns = [
 
     # angular partial/template URLs
     url(r'^partials/lobby/', views.lobby_partial, name='lobby'),
-    url(r'^gettable/', views.get_tables, name='table'),
+    url(r'^partials/table/', views.table_partial, name='table'),
+
+
+
+    #test
+    url(r'^gettable/', views.get_tables, name='gettable'),
 ]

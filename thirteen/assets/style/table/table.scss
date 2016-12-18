@@ -1,0 +1,28 @@
+.tt-table-container{
+    height: calc(100% - 75px);
+
+    .tt-current-hand-container{
+
+        height: 65%;
+        border-bottom: 1px solid black;
+        padding: 30px;
+
+        .tt-green-table{
+            height: 100%; // div spans the width but not the height of the parent container, thus must explicitly define the height
+            background-color: green;
+            border-radius: 10px;
+
+            .tt-card{
+                display: inline-block;
+                width: 58px;
+                height: 79px;
+                border: 1px solid black;
+            }
+
+        }
+    }
+
+    .tt-player-hand-container{
+        height: 35%;
+    }
+}

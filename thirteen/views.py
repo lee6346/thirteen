@@ -19,6 +19,9 @@ def lobby_partial(request):
     # get the HTML template from file system
     return render_to_response('partials/lobby.html')
 
+def table_partial(request):
+    return render_to_response('partials/table.html')
+
 
 def get_tables(request):
     a = [
@@ -37,5 +40,6 @@ def get_tables(request):
             'AvailableSeats': 6,
             'Id': 55
         },
-    ]
+            ]
+           
     return JsonResponse(a, safe=False)

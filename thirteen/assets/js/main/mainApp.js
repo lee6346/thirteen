@@ -25,7 +25,8 @@ angular.module('ttMainApp')
                 {
                     name: 'table',
                     url: '/table/:id',
-                    template: '<h1>welcome to a table</h1>'
+                    templateUrl: '/partials/table',
+                    controller: 'ttTableController'
                 }
             ];
 

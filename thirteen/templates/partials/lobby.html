@@ -1,12 +1,14 @@
-<h1>welcome to the lobby</h1>
-<div ng-click="testFunction()">{{test}}</div>
-<div style="border:1px solid red;padding:10px;" 
-ng-repeat="table in availableTables"
-ng-if="table.AvailableSeats > 4">
-    <div>{{table.Id}}</div>
-    <div ng-bind="table.Id"></div>
-    <div ng-bind="table.AvailableSeats"></div>
-    <div ng-bind="table.Name"></div>
+
+
+<div class="tt-lobby-container">
+    <h1>welcome to the lobby</h1>
+    <div class="panel panel-default" 
+         ng-repeat="table in availableTables" 
+         ui-sref="table({id: table.Id})">
+        <div class="panel-heading">
+            <h3 class="panel-title" ng-bind="table.Name"></h3>
+        </div>
+        <div class="panel-body" ng-bind="table.AvailableSeats">
+        </div>
+    </div>
 </div>
-<div>{{change}}</div>
-<input type="text" ng-model="change"></input>

@@ -7,8 +7,9 @@ var gulp = require('gulp'),
     watch = require('gulp-watch');
 
 var root = './';
-var assetsRoot = './thirteen/assets/'
+var assetsRoot = './thirteen/assets/';
 var staticRoot = './thirteen/static/';
+var imageDir = './thirteen/assets/images/';
 
 var npmDir = root + 'node_modules/';
 
@@ -47,7 +48,8 @@ var getCustomScripts = function() {
 
     var moduleDirs = [
         'main',
-           'lobby', 'table'
+        'lobby', 
+        'table'
     ];
 
     return moduleDirs.map(function(dir) {
@@ -80,7 +82,8 @@ gulp.task('copy', [
     'copy-library-scripts',
     'copy-custom-scripts',
     'copy-library-styles',
-    'copy-fonts'
+    'copy-fonts',
+    'copy-images'
 ]);
 
 gulp.task('copy-custom-sass', function() {
@@ -117,7 +120,12 @@ gulp.task('copy-fonts', function() {
 
     gulp.src(fontDirExpressions)
         .pipe(gulp.dest(staticDirs.fonts));
-})
+});
+
+gulp.task('copy-images', function(){
+    gulp.src(imageDir + '**/*')
+        .pipe(gulp.dest(staticDirs.images));
+});
 
 gulp.task('watch', ['watch-sass', 'watch-custom-scripts']);
 
