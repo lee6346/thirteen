@@ -19,15 +19,7 @@ angular.module('ttMainApp')
                 {
                     name: 'lobby',
                     url: '/lobby',
-                    template: '<h1>welcome to the lobby</h1>' +
-                    '<div ng-click="testFunction()">{{test}}</div>' +
-                    '<div style="border:1px solid red;padding:10px;" ng-repeat="table in availableTables">' +
-                        '<div>{{table.Id}}</div>' +
-                        '<div>{{table.AvailableSeats}}</div>' +
-                        '<div>{{table.Name}}</div>' +
-                    '</div>' +
-                    '<div>{{change}}</div>' +
-                    '<input type="text" ng-model="change"></input>',
+                    templateUrl: '/partials/lobby',
                     controller: 'ttLobbyController'
                 },
                 {

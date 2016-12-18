@@ -1,7 +1,7 @@
 angular.module('ttLobbyApp', []);
 
 angular.module('ttLobbyApp')
-    .controller('ttLobbyController', function($scope) {
+    .controller('ttLobbyController', function($scope, $http) {
 
         console.log('loaded the main controller!');
 
@@ -11,25 +11,20 @@ angular.module('ttLobbyApp')
             console.log('logging from a function!');
         }
 
-        $scope.availableTables = [
-            {
-                Id: 1,
-                AvailableSeats: 3,
-                Name: 'tiger room'
-            },
-            {
-                Id: 2,
-                AvailableSeats: 2,
-                Name: 'monkey room'
-            },
-            {
-                Id: 3,
-                AvailableSeats: 3,
-                Name: 'dragon room'
-            }
-        ];
+        $scope.availableTables = [];
 
         $scope.change = 'this is binded to an input';
+
+        $http({
+            method: 'GET',
+            url: '/gettable'
+        })
+            .then(function(data) {
+                console.log('data returned from call', data);
+                $scope.availableTables = data.data;
+
+
+            });
 
     });
 

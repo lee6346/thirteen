@@ -30,5 +30,6 @@ urlpatterns = [
     url(r'^logout/', auth_views.logout, {'next_page': '/login'}, name='logout'),
 
     # angular partial/template URLs
-    url(r'^partials/test/', views.test_template, name='test'),
+    url(r'^partials/lobby/', views.lobby_partial, name='lobby'),
+    url(r'^gettable/', views.get_tables, name='table'),
 ]
