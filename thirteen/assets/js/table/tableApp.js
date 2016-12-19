@@ -24,6 +24,8 @@ angular.module('ttTableApp')
             cardsList.forEach(function(card){
                 card.x = card.rank*58;
                 card.y = card.suit*77;
+
+                card.backgroundPosition = (card.rank * 58) + 'px ' + (card.suit * 77) + 'px';
             })
         };
 
