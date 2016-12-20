@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.views import generic
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+import requests
 
 import logging
 log = logging.getLogger('thirteen')
@@ -24,22 +25,8 @@ def table_partial(request):
 
 
 def get_tables(request):
-    a = [
-        {
-            'Name': 'table1',
-            'AvailableSeats': 5,
-            'Id': 100
-        },
-        {
-            'Name': 'table2',
-            'AvailableSeats': 4,
-            'Id': 124
-        },
-        {
-            'Name': 'table3',
-            'AvailableSeats': 6,
-            'Id': 55
-        },
-            ]
-           
-    return JsonResponse(a, safe=False)
+   
+    response = requests.get("https://thirteen-f7c9f.firebaseio.com/tables.json")
+
+    return JsonResponse(response.text, safe=False)
+

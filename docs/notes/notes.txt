@@ -1,0 +1,11 @@
+-django config
+-mysql config
+-game core
+-added logging/integrated user login/auth
+-front end build process (gulp/npm)
+-wired up angular including ui-router
+-connect angular to backend (partials, http requests, json)
+-game sprite
+-firebase
+-requests
+-django-channels
