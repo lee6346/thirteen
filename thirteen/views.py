@@ -23,10 +23,13 @@ def lobby_partial(request):
 def table_partial(request):
     return render_to_response('partials/table.html')
 
-
+#todo must configure auth later
 def get_tables(request):
-   
     response = requests.get("https://thirteen-f7c9f.firebaseio.com/tables.json")
-
     return JsonResponse(response.text, safe=False)
 
+def create_table(request):
+    table_id = uuid.uuid4()
+    table_name = <user_request_name>
+    #default_num = 1
+    
