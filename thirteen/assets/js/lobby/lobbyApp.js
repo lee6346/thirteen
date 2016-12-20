@@ -1,29 +1,40 @@
 angular.module('ttLobbyApp', []);
 
 angular.module('ttLobbyApp')
-    .controller('ttLobbyController', function($scope, $http) {
+    .service('ttLobbyHttpService', function ($http) {
+        return {
+            getTables: function () {
+                return $http({
+                    method: 'GET',
+                    url: '/gettable'
+                });
+            },
+            createTable: function(tableName) {
+                return $http({
+                    method: 'POST',
+                    url: '/gettable'
+                });
+            }
+        };
+    });
 
-        console.log('loaded the main controller!');
+angular.module('ttLobbyApp')
+    .controller('ttLobbyController', function ($scope, ttLobbyHttpService) {
 
-        $scope.test = 'this is a test string';
-
-        $scope.testFunction = function() {
-            console.log('logging from a function!');
+        $scope.Contents = {
+            availableTables: []
         }
 
-        $scope.availableTables = [];
-
-        $scope.change = 'this is binded to an input';
+        $scope.Functions = {
+            createTable: function() {
+                console.log('clicked create table');
+            }
+        }
         //!!ajax call 
-        $http({
-            method: 'GET',
-            url: '/gettable'
-        })
-            .then(function(data) {
+        ttLobbyHttpService.getTables()
+            .then(function (data) {
                 console.log('data returned from call', data);
-                $scope.availableTables = data.data;  //!!referenced by  ng-repeat
-
-
+                $scope.Contents.availableTables = JSON.parse(data.data);  //!!referenced by  ng-repeat
             });
 
     });

@@ -1,0 +1,35 @@
+Hey, so this is a temp doc just to get you going for tonight or tomorrow.
+I modified the "gulp_bower.txt" doc, you can follow that to install
+node.js and gulp
+
+Just a few more notes/comments on node and gulp:
+
+- when you install node.js, it comes paired with npm (node package manager).
+    - both "node" and "npm" are set to path, so you can immediately begin using
+      it.
+    - to install our front end app dependencies, which includes not only
+      3rd party javascript libraries, but also other javascript gulp packages,
+      node relies on the "package.json" file in which you specify the specific
+      packages along with their version numbers.
+    - in CMD, running "npm install" (or "npm i" for short) will have node search
+      the current dir for the "package.json" file, and install all the dependencies
+      in a "node_modules" dir, which it places in the same current dir.
+        - Also note that the number of packages you see inside node_modules will 
+          probably be much greater than what you have specified in package.json.
+          This is because it goes through all YOUR specified dependencies, and 
+          recursively installs everything that those packages needs (each package
+          has its' own package.json)
+
+- After installing node, you should install gulp.
+    - The order is important here. Gulp is a program written on top of node, so
+      you literally cant run it without have node installed on the same machine.
+    - once installed, running "gulp" in CMD will search the current path for a file
+      called "gulpfile.js" and run the "default" task. 
+        - You can also specify particular tasks to run by running "gulp *taskname*"
+        - our current default task runs a complete copy of all our assets into
+          the static folder so django can serve them, along with starting to
+          watching our JS and SCSS assets so it can auto build and copy them over
+          every time we make changes
+    - lastly, consider that when using gulp's watch features, every time you 
+      change a currently watched file's name, or add a new file you want to include 
+      to be copied or watched, you need to rerun gulp.

@@ -10,10 +10,11 @@ class HandValidator(object):
     def __init__(self, high_hand=None, high_class=0):
         self.high_hand = high_hand
         self.high_class = high_class
+        self.hand_manager = new HandManager()
  
-    def is_high_hand(self, hand, hand_manager):
+    def is_high_hand(self, hand):
     
-        classif = hand_manager.hand_classification(hand)
+        classif = self.hand_manager.hand_classification(hand)
         if self.high_hand == None:
             self.high_hand = hand
             self.high_class = classif
@@ -63,20 +64,20 @@ class HandValidator(object):
     def is_high_value(self, hand):
         return self.is_high_rank(hand) or (hand[len(hand)-1].rank == self.high_hand[len(hand)-1].rank and self.is_high_suit(hand))
       
-    def is_playable(self, hand, hand_manager):
+    def is_playable(self, hand):
         switch = {
             1 : True,
-            2 : hand_manager.is_repeated(hand),
-            3 : hand_manager.is_repeated(hand) or hand_manager.is_straight(hand),
-            4 : hand_manager.is_repeated(hand) or hand_manager.is_straight(hand),
-            5 : hand_manager.is_straight(hand),
-            6 : hand_manager.is_straight(hand) or hand_manager.is_consecutive_pairs(hand),
-            7 : hand_manager.is_straight(hand),
-            8 : hand_manager.is_straight(hand) or hand_manager.is_consecutive_pairs(hand),
-            9 : hand_manager.is_straight(hand),
-            10 : hand_manager.is_straight(hand) or hand_manager.is_consecutive_pairs(hand),
-            11 : hand_manager.is_straight(hand),
-            12 : hand_manager.is_straight(hand) or hand_manager.is_consecutive_pairs(hand),
+            2 : self.hand_manager.is_repeated(hand),
+            3 : self.hand_manager.is_repeated(hand) or self.hand_manager.is_straight(hand),
+            4 : self.hand_manager.is_repeated(hand) or self.hand_manager.is_straight(hand),
+            5 : self.hand_manager.is_straight(hand),
+            6 : self.hand_manager.is_straight(hand) or self.hand_manager.is_consecutive_pairs(hand),
+            7 : self.hand_manager.is_straight(hand),
+            8 : self.hand_manager.is_straight(hand) or self.hand_manager.is_consecutive_pairs(hand),
+            9 : self.hand_manager.is_straight(hand),
+            10 : self.hand_manager.is_straight(hand) or self.hand_manager.is_consecutive_pairs(hand),
+            11 : self.hand_manager.is_straight(hand),
+            12 : self.hand_manager.is_straight(hand) or self.hand_manager.is_consecutive_pairs(hand),
         }
         return switch.get(len(hand), False)
       

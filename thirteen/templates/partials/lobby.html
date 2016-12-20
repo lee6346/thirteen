@@ -2,13 +2,14 @@
 
 <div class="tt-lobby-container">
     <h1>welcome to the lobby</h1>
+    <button class="btn btn-default" type="submit">Create Table</button>
     <div class="panel panel-default" 
-         ng-repeat="table in availableTables" 
-         ui-sref="table({id: table.Id})">
+         ng-repeat="table in Contents.availableTables" 
+         ui-sref="table({id: table.id})">
         <div class="panel-heading">
-            <h3 class="panel-title" ng-bind="table.Name"></h3>
+            <h3 class="panel-title" ng-bind="table.name"></h3>
         </div>
-        <div class="panel-body" ng-bind="table.AvailableSeats">
+        <div class="panel-body" ng-bind="table.num_players">
         </div>
     </div>
 </div>
