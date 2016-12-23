@@ -9,8 +9,8 @@ angular.module('ttMainApp', [
 // optional configuration, in this case, routing
 angular.module('ttMainApp')
     .config([
-        '$stateProvider', '$urlRouterProvider',
-        function ($stateProvider, $urlRouterProvider) {
+        '$stateProvider', '$urlRouterProvider', '$httpProvider',
+        function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
             // declare all the states (think URLs) we'll need here
             // with angular and ui router, each URL is associated to a 
@@ -37,4 +37,7 @@ angular.module('ttMainApp')
 
             // redirects
             $urlRouterProvider.when('', '/lobby');
+
+            $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+            $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
         }]);

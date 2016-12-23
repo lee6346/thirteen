@@ -13,3 +13,5 @@ bower_components/
 
 thirteen/logs/
 thirteen/static/
+
+thirteen/config/secrets.py

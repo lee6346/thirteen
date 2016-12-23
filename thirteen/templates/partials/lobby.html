@@ -2,7 +2,7 @@
 
 <div class="tt-lobby-container">
     <h1>welcome to the lobby</h1>
-    <button class="btn btn-default" type="submit">Create Table</button>
+    <button class="btn btn-default" ng-click="Functions.createTable()">Create Table</button>
     <div class="panel panel-default" 
          ng-repeat="table in Contents.availableTables" 
          ui-sref="table({id: table.id})">

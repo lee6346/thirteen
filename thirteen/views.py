@@ -4,7 +4,8 @@ from django.urls import reverse
 from django.views import generic
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-import requests
+from config import secrets
+import requests, uuid, json, urllib
 
 import logging
 log = logging.getLogger('thirteen')
@@ -28,8 +29,19 @@ def get_tables(request):
     response = requests.get("https://thirteen-f7c9f.firebaseio.com/tables.json")
     return JsonResponse(response.text, safe=False)
 
+def create_table_modal_partial(request):
+    return render_to_response('partials/modals/create-table.html')
+
+#http://stackoverflow.com/questions/29240940/how-do-you-authenticate-a-server-to-firebase
 def create_table(request):
-    table_id = uuid.uuid4()
-    table_name = <user_request_name>
-    #default_num = 1
-    
+    new_table = {
+        "id": str(uuid.uuid4()),
+        "name": request.body,
+        "num_players": 1
+    }
+    get_params = urllib.urlencode({'auth': secrets.firebase_secret})
+    url = "https://thirteen-f7c9f.firebaseio.com/tables.json?" + get_params
+    response = requests.post(url, json = new_table)
+    print(response.text)
+
+    return render_to_response('partials/table.html')

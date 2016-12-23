@@ -33,7 +33,11 @@ urlpatterns = [
     url(r'^partials/lobby/', views.lobby_partial, name='lobby'),
     url(r'^partials/table/', views.table_partial, name='table'),
 
+    # angular modal partials
+    url(r'^partials/CreateTableModal/', views.create_table_modal_partial, name='create_table_modal'),
 
+   # post urls
+    url(r'^CreateTable/', views.create_table, name='create_table'),
 
     #test
     url(r'^gettable/', views.get_tables, name='gettable'),
