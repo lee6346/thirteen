@@ -9,8 +9,8 @@ angular.module('ttModalApp')
         $scope.Functions = {
             Create: function () {
                 $http.post('/CreateTable/', $scope.Contents.Name)
-                    .then(function(){
-
+                    .then(function(data){
+                        $uibModalInstance.close(data.data);
                     });
             },
             Cancel: function () {

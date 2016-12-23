@@ -42,6 +42,5 @@ def create_table(request):
     get_params = urllib.urlencode({'auth': secrets.firebase_secret})
     url = "https://thirteen-f7c9f.firebaseio.com/tables.json?" + get_params
     response = requests.post(url, json = new_table)
-    print(response.text)
+    return JsonResponse(new_table['id'], safe=False)#render_to_response('partials/table.html')
 
-    return render_to_response('partials/table.html')

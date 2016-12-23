@@ -1,4 +1,4 @@
-angular.module('ttLobbyApp', ['ui.bootstrap', 'ttModalApp']);
+angular.module('ttLobbyApp', ['ui.bootstrap', 'ttModalApp', 'ui.router']);
 
 angular.module('ttLobbyApp')
     .service('ttLobbyHttpService', function ($http) {
@@ -16,7 +16,7 @@ angular.module('ttLobbyApp')
     });
 
 angular.module('ttLobbyApp')
-    .controller('ttLobbyController', function ($scope, ttLobbyHttpService, $uibModal) {
+    .controller('ttLobbyController', function ($scope, ttLobbyHttpService, $uibModal, $state) {
 
         $scope.Contents = {
             availableTables: []
@@ -31,7 +31,11 @@ angular.module('ttLobbyApp')
                     //controllerAs: '$ctrl',
                     //size: size,
                     //appendTo: parentElem
-                });
+                })
+                    .result.then(function(tableId) {
+                        console.log('tableId in controller after closing', tableId)
+                        $state.go('table', {id: tableId})
+                    });
             }
         }
         //!!ajax call 
